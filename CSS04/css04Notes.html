@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body {
+            background-color:rgba(185, 255, 255, 0.1);
+            font-family: sans-serif;
+        }
+        .definition {
+            background-color: darkgrey; 
+            color: rgb(185, 255, 255); 
+        }
+        article {
+            align: center; 
+            width: 50%; 
+            text-align: left;
+            margin: auto auto; 
+        }
+        code {
+            font-size: 1.2em; 
+            font-weight: bold;
+            background-color: darkgrey; 
+            color: white; 
+        }
+        .simpleGridExample {
+            border-radius: 5px;
+            padding: 10px;
+            background-color: rgb(207,232,220);
+            border: 2px solid rgb(79,185,227);
+            display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(200px, 1fr)); 
+            grid-gap: 20px;
+            grid-auto-rows: minmax(100px, auto);
+        }
+        .simpleGridExample div {
+            border: 1px solid black;
+        }
+/* line based grid styles  */
+        .lineBasedGrid{
+            display: grid;
+            grid-template-columns: 1fr 3fr;
+            grid-gap: 20px;
+            border: 1px solid black;
+        }
+        .lineBasedGrid header, footer {
+            border-radius: 5px;
+            padding: 10px;
+            background-color: rgb(207,232,220);
+            border: 2px solid rgb(79,185,227);
+        }
+        .lineBasedGrid header{
+            grid-column: 1/3;
+            grid-row: 1;
+        }
+        .lineBasedGrid article {
+            grid-column: 2; 
+            grid-row: 2; 
+        }
+        .lineBasedGrid aside {
+            border-right: 1px solid #999;
+            grid-column: 1;
+            grid-row: 2;
+        }
+        .lineBasedGrid footer {
+            grid-column: 1/3;
+            grid-row: 3; 
+        }
+        /* twelve line grid styles */
+        .twelveLineGrid {
+            display: grid;
+            grid-template-columns: repeat(12, minmax(0,1fr));
+            grid-gap: 20px;
+            border: 1px solid black;
+        }
+        .twelveLineGrid header, footer {
+            border-radius: 5px;
+            padding: 10px;
+            background-color: rgb(207,232,220);
+            border: 2px solid rgb(79,185,227);
+        }
+        .twelveLineGrid aside {
+            border-right: 1px solid #999;
+        }
+        .twelveLineGrid header{ 
+            grid-column: 1/13; 
+            grid-row: 1; 
+        }
+
+        .twelveLineGrid article{
+            grid-column: 4/13; 
+            grid-row: 2; 
+        }
+
+        .twelveLineGrid aside {
+            grid-column: 1/4;
+            grid-row: 2; 
+        }
+
+        .twelveLineGrid footer {
+            grid-column: 1/13; 
+            grid-row: 3; 
+        }
+
+
+    </style>
+</head>
+<body>
+    <article>
+        <h1>CSS Layout Notes</h1>
+    <ul>
+        <li><span class="definition">Flexbox:</span> a method of displaying elements on a webpage that allows for greater formatting options than those available to block and inline only. For example, flexbox allows three articles to be ordered one next to the other, with each taking up the most of their available space in instead of only the space their content takes up.</li>
+        <li>To make something use the flex display, set its parent element to <code>display: flex;</code>. This will cause each child of that element to display as flex elements. </li>
+        <li>Elements laid out as flexible boxes are laid along two axes: <span class="definition">main axis</span> and <span class="definition">cross axis</span>.</li>
+        <!-- <li>The <span class="definition">flex-</span></li> -->
+        <li><code>flex-wrap: wrap;</code> use inside flexbox container to allow flex items to wrap below each other.</li>
+        <li><code>flex-basis: xxpx;</code> use to set how wide a flex item will be before it is moved to a new line. Applied to flex items, not flex containers. </li>
+        <li><code>flex-grow: xx</code> Used as a unitless value to dicate what proportion of the line each flex item will use. If different items are given unique values, they will take up more/less of the line as appropriate. This can also have another unit given, as before: <code>flex: 1 200px;</code> Here, each flex item will have a maximum of 200px, then any remaining space will be divided between each flex item according to their proportions.</li>
+        <li>The <code>flex: </code>shorthand sets, in order: <code>flex-grow, flex-shrink, flex-basis</code>. </li>
+        <li><code>flex-flow: row wrap</code> shorthand for <code>flex-wrap</code> and <code>flex-direction: (row/column(default))</code>.</li>
+        <li><code>aling-items: (stretch/center/start/end/flex-start/flex-end/more-available);</code> controls where flex items align on the cross axis.Default value is stretch.</li>
+        <li><code>justify-content: (start/center/space-around/space-between/space-evenly)</code> determines where the flex items lay on the main axis. Default value is flex-start.</li>
+        <li><code>order: x</code> sets the position of a flex item. By default, all flex items have an order value of 0. Those with a higher value appear later. Negative values will cause the item to appear earlier. Flex items with the same order value will appear in their source order.</li>
+        <li><strong>Grids</strong> allow us to organize our page into columns, rows, and the spaces between (normally called gutters), and keep this layout consistent among pages with different content. We use <code>display: grid;</code> to set our layout to grid, just like setting our layout to flex. </li>
+        <li>Set the number of columns used <code>grid-template-columns: xxpx xxpx xxpx ...</code>, using px or a percentage, and declaring the width for as many columns as you need. Also available is the <code>fr</code> unit, which gives each column a portion of the width equal to the part of the whole the value it is given is. For example: <code>grid-template-columns: 1fr 1fr 2fr;</code> would give each of the first two columns one quarter of the total width (1/4) and the last column half the total width (2/4, 1/2). The number of columns can be repeated using <code>grid-template-columns: repeat(x, y);</code> where x is the number of times that y should be repeated. So <code>grid-template-columns: repeat(2, 1fr);</code> would repeat a listing twice with 1fr of the width of the row before moving to the next row. Similarly, <code>grid-template-columns: repeat(3, 200px)</code> would have three listings per row at 200px wide each, before moving to the next row. </li>
+        
+        <h2>Simple Grid Example</h2>
+        <div class="simpleGridExample">
+                <div>This row's width is being expanded because of <code>grid-auto-rows: minmax(100px, auto);</code>. At minimum it will be 100px tall (see the rows below), and will grow to any maximum to fit new content because of <code>auto</code>.</div>
+                <div>Two</div>
+                <div>Three</div>
+                <div>Four</div>
+                <div>Five</div>
+                <div>Six</div>
+                <div>Seven</div>
+            </div>
+        <li><strong>Gaps</strong> for spaces between rows and columns we use <code>grid-column-gap, grid-row-gap, or grid-gap</code>. Gap values can be lengths or percentages, but not <code>fr</code>. While <code>grid-gap</code> is still supported, <code>gap</code> will be the new standard, and so both should be used to maintain the code for both old and new browsers.</li>
+        <li><strong>Implicit and Explicit Grids</strong> Implicit grids occur when we have not declared anything for one axis of <code>grid-template-(columns/rows)</code>. Explicit grids are for when we have declared a value for either axis of the same. Implicit grids automatically adjust their width or height to fit the content, but can be given values with <code>grid-auto-(rows/columns)</code>. This will ensure that the columns or rows given that value are always that value. </li>
+        <li><code>grid-auto-(rows/columns): minmax(x,y);</code> <strong>IMPORTANT! here, and below!</strong> This will allow the axis to which it is set to have a minimum size value of x and a maximum size value of y, based on the content inside the content box (see the first box in the example grid above). This would have solved the issue of content flowing out of the buttons on the Knave character generator.</li>
+        <li><code>grid-template-(columns/rows): repeat(auto-fill,minmax(x, 1fr)); </code> This sets the size of the axis to a minimum width of x, and will expand as needed to fill the available space. This is different from using only <code>minmax</code> because it will add rows/colums as needed to make space for the contant to fit, not just adjust the width/height of the box it is in.</li>
+
+        <h2>Grid Lines</h2>
+        <div class="lineBasedGrid">
+                <header>This is my lovely blog</header>
+                <article>
+                        <h1>My article</h1>
+                        <p>Duis felis orci, pulvinar id metus ut, rutrum luctus orci. Cras porttitor imperdiet nunc, at ultricies tellus laoreet sit amet. Sed auctor cursus massa at porta. Integer ligula ipsum, tristique sit amet orci vel, viverra egestas ligula. Curabitur vehicula tellus neque, ac ornare ex malesuada et. In vitae convallis lacus. Aliquam erat volutpat. Suspendisse ac imperdiet turpis. Aenean finibus sollicitudin eros pharetra congue. Duis ornare egestas augue ut luctus. Proin blandit quam nec lacus varius commodo et a urna. Ut id ornare felis, eget fermentum sapien.</p>
+        
+                        <p>Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada ultrices. Phasellus turpis est, posuere sit amet dapibus ut, facilisis sed est. Nam id risus quis ante semper consectetur eget aliquam lorem. Vivamus tristique elit dolor, sed pretium metus suscipit vel. Mauris ultricies lectus sed lobortis finibus. Vivamus eu urna eget velit cursus viverra quis vestibulum sem. Aliquam tincidunt eget purus in interdum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </article>
+                <aside><h2>Other things</h2>
+                    <p>Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada ultrices. Phasellus turpis est, posuere sit amet dapibus ut, facilisis sed est.</p></aside>
+                <footer>Contact me@mysite.com</footer>
+            </div>
+            <br>
+            
+        <li><strong>Grid Lines</strong> Grids start with lines. In languages like English, lines are numbered from left to right starting with 1. In languages like Arabic, lines are ordered right to left starting with 1. We can place content on our grid using these properties: <code>grid-column-start, grid-column-end, grid-row-start, grid-row-end, grid-column, grid-row</code>, where <>grid-column and grid-row</code> are shorthand for <code>grid-(column/row)-start, grid-(column/row)-end</code>. <code>grid-(row/column)</code>'s values are expressed by separating them with a forward slash like so: <code>grid-column: 1/2;</code>. </li>
+
+        <h2>12 Line Grid</h2>
+        <div class="twelveLineGrid">
+                <header>This is my lovely blog</header>
+                <article>
+                        <h1>My article</h1>
+                        <p>Duis felis orci, pulvinar id metus ut, rutrum luctus orci. Cras porttitor imperdiet nunc, at ultricies tellus laoreet sit amet. Sed auctor cursus massa at porta. Integer ligula ipsum, tristique sit amet orci vel, viverra egestas ligula. Curabitur vehicula tellus neque, ac ornare ex malesuada et. In vitae convallis lacus. Aliquam erat volutpat. Suspendisse ac imperdiet turpis. Aenean finibus sollicitudin eros pharetra congue. Duis ornare egestas augue ut luctus. Proin blandit quam nec lacus varius commodo et a urna. Ut id ornare felis, eget fermentum sapien.</p>
+        
+                        <p>Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada ultrices. Phasellus turpis est, posuere sit amet dapibus ut, facilisis sed est. Nam id risus quis ante semper consectetur eget aliquam lorem. Vivamus tristique elit dolor, sed pretium metus suscipit vel. Mauris ultricies lectus sed lobortis finibus. Vivamus eu urna eget velit cursus viverra quis vestibulum sem. Aliquam tincidunt eget purus in interdum. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                </article>
+                <aside><h2>Other things</h2>
+                    <p>Nam vulputate diam nec tempor bibendum. Donec luctus augue eget malesuada ultrices. Phasellus turpis est, posuere sit amet dapibus ut, facilisis sed est.</p></aside>
+                <footer>Contact me@mysite.com</footer>
+            </div>
+        <li>Grids in most CSS frameworks are based on 12 or 16 column/row layouts. Organizing our code this way (see the CSS in the style tag above) may make manipulating our content easier.</li>
+    </ul>
+    </article>
+</body>
+</html>
